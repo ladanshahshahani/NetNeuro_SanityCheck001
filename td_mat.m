@@ -42,8 +42,8 @@ PC        = zeros(nnodes);
 lags = lags';
 
 %%%% zero padd reshaped cross correlation function (R) and lag vector (lags) to avoid indexes equal to zero in the parabolic_interp.m routine
-R    = padarray(R, [1 0 0], 'pre');
-lags = padarray(lags, 1, 'pre');
+% R    = padarray(R, [1 0 0], 'pre');
+% lags = padarray(lags, 1, 'pre');
 
 %% Part2: parabolic interpolation 
 for i = 1:nnodes
