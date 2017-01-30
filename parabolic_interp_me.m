@@ -35,42 +35,20 @@ function [peak_lag,peak_cov]= parabolic_interp_me(lcc,lags, TR)
 %I have set a boundary condition such that any lag greater than 5 seconds is recorded as a NaN-- this is based on our experience that giant lags tend to be noise. You can relax or abolish this 
 %boundary condition if you like.
 
-global k
 peak_lag = [];
 peak_cov = [];
 index = [];
 MAX = 5; %Maximal lag to be considered
 zero = find(lags==0); %Index for zero lag
-zero(1) = [];
 
-%Local Maximum
-if lcc(zero) > 0
-    [D I] = max(lcc);
-    if abs(lags(I)) > MAX
-        peak_lag = NaN;
-        peak_cov = NaN;
-        return
-    end
-    index = [I-1 I I+1]; %These are the three x values to be used for parabolic interpolation
+AbsLcc = abs(lcc);
+[D, I] = max(AbsLcc);
+if abs(lags(I)) > MAX
+    peak_lag = NaN;
+    peak_cov = NaN;
+    return
 end
-
-%Local Minimum
-if lcc(zero) < 0
-%     [D I] = min(abs(lcc(2:end)));
-%     I = I+1;
-%     [D I] = min(lcc);
-    lcc2 = -1*lcc;
-    lcc3 = lcc2(2:end);
-    [D, I] = min(lcc3);
-    I = I+1;
-%     [D I] = min((-1*lcc));
-    if abs(lags(I)) > MAX
-        peak_lag = NaN;
-        peak_cov = NaN;
-        return
-    end
-    index = [I-1 I I+1]; %These are the three x values to be used for parabolic interpolation
-end
+index = [I-1 I I+1]; %These are the three x values to be used for parabolic interpolation
 
 if isempty(index)
     peak_lag = NaN;
