@@ -1,4 +1,4 @@
-# NetNeuro_sanityCheck001
+# NetNeuroProject
 Sanity check lag extraction
 "demo_SynthTimeSeries.m" is intended for checking if the artificially introduced lags are correctly estimated.
 Both full and fractional delay are introduced. It calls "td_mat.m", which in turn calls "parabolic_interp_me.m".
